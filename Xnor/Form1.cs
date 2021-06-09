@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -15,8 +16,9 @@ namespace xnor
         {
             InitializeComponent();
 
-            Fix.main(null);
-            var n1 = THWrapper.THIntTensor_new();
+            //Fix.main(null);
+
+            /*var n1 = THWrapper.THIntTensor_new();
             THWrapper.THIntTensor_resize2d(n1, 10, 20);
 
             var bts = BitConverter.GetBytes(-422);
@@ -24,7 +26,7 @@ namespace xnor
             THWrapper.THIntTensor_set2d(n1, 0, 0, res);
             var v1 = THWrapper.THIntTensor_get2d(n1, 0, 0);
             var bts2 = BitConverter.GetBytes(v1);
-            var restore = BitConverter.ToInt32(bts2, 0);
+            var restore = BitConverter.ToInt32(bts2, 0);*/
 
             //var n1 = THWrapper.THFloatTensor_new();
             //THWrapper.THFloatTensor_resize2d(n1, 10, 20);
@@ -63,7 +65,10 @@ namespace xnor
 
             net = new FPBinLeNetTest();
             imgs = Stuff.LoadImages("t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte");
-            sample = NpyLoader.Load("1.npy");
+            if (File.Exists("1.npy"))
+            {
+                sample = NpyLoader.Load("1.npy");
+            }
 
             net.LoadFromZip("BinLenet.zip");
             net.PrepareData();
